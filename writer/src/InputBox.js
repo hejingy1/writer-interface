@@ -1,7 +1,7 @@
 // InputBox.js
 import React from 'react';
 
-function InputBox({ value, onChange }) {
+function InputBox({ value, onChange, size_row=4, size_col =30, id}) {
   const handleChange = (e) => {
     onChange(e.target.value);
   };
@@ -9,11 +9,12 @@ function InputBox({ value, onChange }) {
   return (
     <div>
       <textarea
-        // placeholder="Type something..."
+        inputProps={{style: {fontSize: 140}}}
+        id={id}
         value={value}
         onChange={handleChange}
-        rows={4}
-        cols={30}
+        rows={size_row}
+        cols={size_col}
       />
     </div>
   );

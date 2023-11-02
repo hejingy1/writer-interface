@@ -1,20 +1,26 @@
 // InputBox.js
 import React from 'react';
 
-function InputBox({ value, onChange, size_row=4, size_col =30, id}) {
+function InputBox({ value, onChange, onClick, id}) {
   const handleChange = (e) => {
     onChange(e.target.value);
+  };
+
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    }
   };
 
   return (
     <div>
       <textarea
-        inputProps={{style: {fontSize: 140}}}
+        className="border border-black p-2"
+        inputProps={{ fontSize: 14 }}
         id={id}
         value={value}
         onChange={handleChange}
-        rows={size_row}
-        cols={size_col}
+        onClick={handleClick}
       />
     </div>
   );

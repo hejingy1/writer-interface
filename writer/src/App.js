@@ -1,15 +1,14 @@
 // App.js
 import React from 'react';
 import './App.css';
-import ParentInput from './ParentInput';
-// import Testing from './testing'
-// import InfoBox from './InfoBox';
+import Presenting from './Presenting';
 
 function App() {
   return (
     
     <div className="App">
-      <ParentInput />
+      <Presenting/>
+      {/* <ParentInput /> */}
       {/* <InfoBox /> */}
     </div>
     

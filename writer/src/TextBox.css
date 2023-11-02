@@ -1,0 +1,9 @@
+.flexbox-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.flexbox-inside{
+    display: flex;
+    flex-direction:column;
+}

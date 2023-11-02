@@ -1,25 +1,89 @@
 import React, { useState, useEffect} from 'react';
 import InputBox from './InputBox';
-// import './App.css';
+import TextBox from './TextBox';
 import './ParentInput.css';
-// import InfoBox from './InfoBox';
+import axios from "axios";
+
 
 function ParentInput() {
-  const [inputData, setInputData] = useState(['', '', '']);
-  const [order, setOrder] = useState([]);
+  const [material, setMaterial] = useState('');
+  const [requirement, setRequirement] = useState('');
+  const [requirementWords, setWords] = useState(0);
+  const [outlineData, setOutline] = useState(['', '', '']);
+  const [outlineIndex, setOutlineIndex] = useState(0);
+  const [outlineSeg, setOutlineSeg] = useState([]);
+  const [text, setText] = useState([]);
+  // const [outlineWords, setOutlineWords] = useState([]);
 
-  const handleInputChange = (index, value) => {
-    const updatedData = [...inputData];
+
+
+  const handleOutlineChange = (index, value) =>{
+    const updateOutline = [...outlineData];
+    updateOutline[index] = value;
+    setOutline(updateOutline);
+  }
+
+  const handleReturnOutlineChange = (index, value) => {
+    const updatedData = [...outlineSeg];
     updatedData[index] = value;
-    setInputData(updatedData);
+    setOutlineSeg(updatedData);
   };
 
-  const handleAddToOrder = () => {
-    const newOrder = [...order];
-    newOrder.push(inputData.join(' ')); // Combine the input values
-    setOrder(newOrder);
-    setInputData(['', '', '']); // Clear the input values
+  const handleTextChange = (index, value) =>{
+    const updateOutline = [...text];
+    updateOutline[index] = value;
+    setText(updateOutline);
+  }
+
+  const handleMaterialChange = (value) =>{
+    setMaterial(value);
+  }
+  const handleRequirementChange = (value) =>{
+    setRequirement(value);
+  }
+  const handleWordsChange = (value) =>{
+    setWords(value);
+  }
+
+  const outlineFeed = {
+    "requirement_word": requirementWords,
+    "material": material,
+    "requirement": requirement
+  }
+
+  const textFeed ={
+    "requirement_word": requirementWords,
+    "material": material,
+    "requirement": requirement,
+    "outline": outlineData[outlineIndex]
+  }
+
+  const handleReturnOutline = (res) =>{
+    setOutline(res.data);
+  }
+
+  const handleReturnText = (res) =>{
+    console.log(res)
+    setOutlineSeg(res.data[0]);
+    setText(res.data[1]);
+  }
+
+  const handleOnClick = (newIndex) =>{
+    setOutlineIndex(newIndex);
+  }
+
+  const handleAdd = () => {
+    axios.post("http://localhost:8000/api/writers/", outlineFeed)
+    .then((res)=>handleReturnOutline(res));
   };
+
+  const handleText = () =>{
+    axios.put("http://localhost:8000/api/writers/1/", textFeed)
+    .then((res)=>handleReturnText(res));
+  }
+
+
+
 
 
   useEffect(() => {
@@ -29,13 +93,21 @@ function ParentInput() {
       const a = document.getElementById("assistant");
       const s = document.getElementById("system");
       const u = document.getElementById("user");
+      const outline1 = document.getElementById("outline1");
+      const outline2 = document.getElementById("outline2");
+      const outline3 = document.getElementById("outline3");
+      outline1.rows = Math.floor(window.innerHeight/45);
+      outline1.cols = Math.floor(window.innerWidth/23);
+      outline2.rows = Math.floor(window.innerHeight/45);
+      outline2.cols = Math.floor(window.innerWidth/23);
+      outline3.rows = Math.floor(window.innerHeight/45);
+      outline3.cols = Math.floor(window.innerWidth/23.5);
       a.rows = Math.floor(window.innerHeight / 30);
       a.cols = Math.floor(window.innerWidth / 12.5); 
       u.rows = Math.floor(window.innerHeight / 60);
       u.cols = Math.floor(window.innerWidth / 20); 
       s.rows = Math.floor(window.innerHeight / 70);
       s.cols = Math.floor(window.innerWidth / 20); 
-
     };
 
     // Set initial size
@@ -54,43 +126,70 @@ function ParentInput() {
     <div>
       <div className="flexbox-container">
       <label>
-        Assistant:
+        资料:
         <InputBox
+          className="border border-black p-2"
           id={'assistant'}
-          key={0}
-          value={inputData[0]}
-          onChange={(newValue) => handleInputChange(0, newValue)}
-          left = "150"
-          size_row = "20"
-          size_col = "120"
+          value={material}
+          onChange={(newValue) => handleMaterialChange(newValue)}
+          // left = "150"
+          // size_row = "20"
+          // size_col = "120"
         />
       </label>
       <div className="flexbox-inside">
         <label>
-          User:
+          论文要求:
         <InputBox
             id={'user'}
-            key={1}
-            value={inputData[1]}
-            onChange={(newValue) => handleInputChange(1, newValue)}
+            value={requirement}
+            onChange={(newValue) => handleRequirementChange(newValue)}
           />
         </label>
         <label>
-          System:
+          论文字数:
           <InputBox
             id={'system'}
-            key={2}
-            value={inputData[2]}
-            onChange={(newValue) => handleInputChange(2, newValue)}
+            value={requirementWords}
+            onChange={(newValue) => handleWordsChange(newValue)}
           />
         </label>
       </div>
       </div>
-      <button onClick={handleAddToOrder}>Add to Order</button>
-      <h2>Order of Input Data:</h2>
+      <button onClick={handleAdd}>生成大纲</button>
+      <div className="flexbox-container">
+        <InputBox
+          id={'outline1'}
+          key={0}
+          value={outlineData[0]}
+          onChange={(newValue) => handleOutlineChange(0, newValue)}
+          onClick={(newIndex) => handleOnClick(0)}
+        />
+        <InputBox
+          id={'outline2'}
+          key={1}
+          value={outlineData[1]}
+          onChange={(newValue) => handleOutlineChange(1, newValue)}
+          onClick={(newIndex) => handleOnClick(1)}
+        />
+        <InputBox
+          id={'outline3'}
+          key={2}
+          value={outlineData[2]}
+          onChange={(newValue) => handleOutlineChange(2, newValue)}
+          onClick={(newIndex) => handleOnClick(2)}
+        />
+      </div>
+      <button onClick={handleText}>生成论文</button>
       <ul>
-        {order.map((item, index) => (
-          <li key={index}>{item}</li>
+        {outlineSeg?.map((item, index) => (
+          <TextBox
+          key={index}
+          onChangeOutline={(newValue) => handleReturnOutlineChange(index, newValue)}
+          onChangePaper={(newValue) => handleTextChange(index, newValue)}
+          outline={item}
+          paper={text[index]}
+          />
         ))}
       </ul>
     </div>

@@ -40,7 +40,7 @@ function Presenting() {
 
     const handleText = () => {
         setLoading(false);
-        axios.put("http://localhost:8000/api/writers/1/", textFeed)
+        axios.put(`${process.env.REACT_APP_API_ROOT}/api/writers`, textFeed)
             .then((res) => handleReturnText(res));
     };
 

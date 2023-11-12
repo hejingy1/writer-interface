@@ -17,6 +17,11 @@ function Presenting() {
     const handleRequirementChange = (value) => {
         setRequirement(value.target.value);
     }
+
+    const handleInputClick = () =>{
+        setRequirement('做到与时俱进、选题新颖、论题适当、观点正确,思路清晰、论证精当、结构严谨、文字简练流畅、理论联系实际,体现改革创新精神。英语类论文用中文撰写,引例可适当用英文。');
+    }
+
     const handleWordsChange = (value) => {
         const re = /^[0-9\b]+$/;
         if (value.target.value === '' || re.test(value.target.value)) {
@@ -50,7 +55,7 @@ function Presenting() {
             <div className="bg-white shadow-md rounded-md p-4 ml-9 col-span-1">
                 <form className="p-4">
                     <div>
-                        <div className="bg-white text-left block mb-2 text-sm font-medium text-gray-900 dark:text-white">字数</div>
+                        <div className="bg-white text-left block mb-2 text-sm font-medium text-gray-900 dark:text-white">论文字数</div>
                         <input
                             type="text"
                             id="text_words"
@@ -60,17 +65,19 @@ function Presenting() {
                         ></input>
                     </div>
                     <div className="mt-3">
-                        <div className="bg-white text-left block mb-2 text-sm font-medium text-gray-900 dark:text-white">要求</div>
+                        <div className="bg-white text-left block mb-2 text-sm font-medium text-gray-900 dark:text-white">论文要求</div>
                         <textarea
+                            placeholder="请在输入论文主题时添加约束类似以下&#10;做到与时俱进、选题新颖、论题适当、观点正确,思路清晰、论证精当、结构严谨、文字简练流畅、理论联系实际,体现改革创新精神。英语类论文用中文撰写,引例可适当用英文。"
                             type="text"
                             id="requirement"
                             className="bg-gray-50 resize-none h-44 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             value={requirement}
+                            onClick={handleInputClick}
                             onChange={(value) => handleRequirementChange(value)}
                         ></textarea>
                     </div>
                     <div className="mt-3">
-                        <div className="bg-white text-left block mb-2 text-sm font-medium text-gray-900 dark:text-white">材料</div>
+                        <div className="bg-white text-left block mb-2 text-sm font-medium text-gray-900 dark:text-white">论文材料</div>
                         <textarea
                             type="text"
                             id="material"

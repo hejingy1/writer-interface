@@ -10,7 +10,6 @@ function Presenting() {
     const [material, setMaterial] = useState('');
     const [text, setText] = useState('');
     const [loadingCond, setLoading] = useState(true);
-    const [clicked, setClick] = useState(false);
 
     const handleMaterialChange = (value) => {
         setMaterial(value.target.value);
@@ -19,12 +18,6 @@ function Presenting() {
         setRequirement(value.target.value);
     }
 
-    const handleInputClick = () =>{
-        if(!clicked){
-            setClick(true);
-            setRequirement('做到与时俱进、选题新颖、论题适当、观点正确,思路清晰、论证精当、结构严谨、文字简练流畅、理论联系实际,体现改革创新精神。英语类论文用中文撰写,引例可适当用英文。');
-        }
-    }
 
     const handleWordsChange = (value) => {
         const re = /^[0-9\b]+$/;
@@ -76,7 +69,7 @@ function Presenting() {
                             id="requirement"
                             className="bg-gray-50 resize-none h-44 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             value={requirement}
-                            onClick={handleInputClick}
+                            // onClick={handleInputClick}
                             onChange={(value) => handleRequirementChange(value)}
                         ></textarea>
                     </div>

@@ -46,6 +46,18 @@ function Presenting() {
             .then((res) => handleReturnText(res));
     };
 
+    const checkUser= (value) => {
+        console.log(value.target.value)
+        const number = value.target.value.length;
+        if(number>=5000){
+            document.getElementById("material").style.borderColor = "red";
+            document.getElementById("maxReached").style.visibility = "visible";
+        }else {
+            document.getElementById("maxReached").style.visibility = "hidden";
+            document.getElementById("material").style.borderColor = "gray";
+        }
+    }
+
 
     return (
         <div className="bg-white grid grid-cols-2 gap-4">
@@ -81,7 +93,10 @@ function Presenting() {
                             className="bg-gray-50 resize-none h-60 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             value={material}
                             onChange={(value) => handleMaterialChange(value)}
+                            maxlength={5000}
+                            onInput={(value) => checkUser(value)}
                         ></textarea>
+                        <label id="maxReached" style={{visibility: "hidden", color: "red"}}>You have reach the word count limit (5000)</label>
                     </div>
                     <button
                         type="button"

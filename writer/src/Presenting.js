@@ -8,12 +8,18 @@ function Presenting() {
     const [requirementWords, setWords] = useState(0);
     const [requirement, setRequirement] = useState('');
     const [material, setMaterial] = useState('');
+    const [feedback, setfeedback] = useState('');
     const [text, setText] = useState('');
     const [loadingCond, setLoading] = useState(true);
 
     const handleMaterialChange = (value) => {
         setMaterial(value.target.value);
     }
+
+    const handleFeedbackChange = (value) => {
+        setfeedback(value.target.value);
+    }
+
     const handleRequirementChange = (value) => {
         setRequirement(value.target.value);
     }
@@ -32,7 +38,8 @@ function Presenting() {
     const textFeed = {
         "requirement_word": requirementWords,
         "material": material,
-        "requirement": requirement
+        "requirement": requirement,
+        "feedback": feedback
     }
 
     const handleReturnText = (res) => {
@@ -64,7 +71,7 @@ function Presenting() {
                     <div className="mt-3">
                         <div className="bg-white text-left block mb-2 text-sm font-medium text-gray-900 dark:text-white">论文要求</div>
                         <textarea
-                            placeholder="请在输入论文主题时添加约束类似以下&#10;做到与时俱进、选题新颖、论题适当、观点正确,思路清晰、论证精当、结构严谨、文字简练流畅、理论联系实际,体现改革创新精神。英语类论文用中文撰写,引例可适当用英文。"
+                            placeholder="请输入具体的写作需求"
                             type="text"
                             id="requirement"
                             className="bg-gray-50 resize-none h-44 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -90,6 +97,17 @@ function Presenting() {
                     >
                         生成论文
                     </button>
+                    <div className="mt-3">
+                        <div className="bg-white text-left block mb-2 text-sm font-medium text-gray-900 dark:text-white">使用反馈</div>
+                        <textarea
+                            placeholder="请对使用的体验做一个反馈"
+                            type="text"
+                            id="feedback"
+                            className="bg-gray-50 resize-none h-60 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            value={feedback}
+                            onChange={(value) => handleFeedbackChange(value)}
+                        ></textarea>
+                    </div>
                 </form>
             </div>
             <div className="bg-white shadow-md rounded-md p-4 mr-9 col-span-1">
